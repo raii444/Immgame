@@ -4,28 +4,40 @@ using UnityEngine;
 
 public class MoveLeft : MonoBehaviour
 {
-    private float speed = 30;
-    private CarMovement carMovementScript;
-    private float leftBound = -15;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        carMovementScript = GameObject.Find("Player").GetComponent<CarMovement>();
-    }
+    private float speed = 10;
+    private float resetPosition = -30; // Adjust this value based on your background size
 
     // Update is called once per frame
     void Update()
     {
-        if (carMovementScript != null && carMovementScript.rb.velocity.x > 0)
+        // Move to the left continuously
+        transform.Translate(Vector3.left * Time.deltaTime * speed);
+
+        // Check if the background has reached the reset position
+        if (transform.position.x <= resetPosition)
         {
-            // Move to the left
-            transform.Translate(Vector3.left * Time.deltaTime * speed);
+            // Reposition the background to the right of the other one
+            RepositionBackground();
         }
-        else
+    }
+
+    void RepositionBackground()
+    {
+        // Find all objects with the same name as this one
+        GameObject[] backgrounds = GameObject.FindGameObjectsWithTag("Background");
+
+        // Find the rightmost background
+        float rightmostX = float.MinValue;
+        foreach (GameObject background in backgrounds)
         {
-            // If the car is not moving to the right or script not found, destroy the GameObject
-            Destroy(gameObject);
+            float x = background.transform.position.x;
+            if (x > rightmostX)
+            {
+                rightmostX = x;
+            }
         }
+
+        // Set this background's position to the right of the rightmost background
+        transform.position = new Vector3(rightmostX + resetPosition, transform.position.y, transform.position.z);
     }
 }
