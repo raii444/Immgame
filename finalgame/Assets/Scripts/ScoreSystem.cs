@@ -19,6 +19,7 @@ public class ScoreSystem : MonoBehaviour
     {
 	gameOverText.SetActive(false);
 	startTime = Time.time;
+	timer = 0f;
     }
 
     // Update is called once per frame
@@ -40,6 +41,8 @@ public class ScoreSystem : MonoBehaviour
     public void StartGame()
     {
          isGameStarted = true;
+         startTime = Time.time;
+         timer = 0f;
     }
     
     public void StopTimer()
