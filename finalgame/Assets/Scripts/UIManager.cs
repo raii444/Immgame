@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour
          startPage.SetActive(true);
          gameOverUI.SetActive(false);
          
-         scoreSystem.StartGame();
     }
 
      public void StartGame()
