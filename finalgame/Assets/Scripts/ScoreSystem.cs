@@ -11,6 +11,7 @@ public class ScoreSystem : MonoBehaviour
 	float startTime;
 	float timer;
 	bool isGameOver = false;
+	bool isGameStarted = false;
 	
 	
     // Start is called before the first frame update
@@ -23,11 +24,11 @@ public class ScoreSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    	if (!isGameOver)
-    	{
-        	timer = Time.time - startTime;
-        	scoreLabel.text = Mathf.Round(timer).ToString();
-        }
+    	 if (isGameStarted && !isGameOver)
+	    {
+	        timer = Time.time - startTime;
+	        scoreLabel.text = Mathf.Round(timer).ToString();
+    	    }
     }
     
     public void GameOver()
@@ -36,6 +37,17 @@ public class ScoreSystem : MonoBehaviour
          isGameOver = true;
     }
     
+    public void StartGame()
+    {
+         isGameStarted = true;
+    }
+    
+    public void StopTimer()
+    {
+         isGameStarted = false;
+    }
+
+    
     public void RestartTimer()
     {
          startTime = Time.time;
@@ -43,7 +55,7 @@ public class ScoreSystem : MonoBehaviour
          timer = 0f;
          
          scoreLabel.text = "0";
-         
          isGameOver = false;
+         isGameStarted = false;
     }
 }

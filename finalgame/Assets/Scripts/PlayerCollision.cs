@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class PlayerCollision : MonoBehaviour
 {	 
     public CarMovement carMovement;
@@ -10,6 +12,9 @@ public class PlayerCollision : MonoBehaviour
     
     public ScoreSystem scoreSystem; 
     public SpawnManager spawnManager;
+    
+    public UIManager uiManager;
+    public float fallThreshold = -5f;
 	
     // Start is called before the first frame update
     void Start()
@@ -20,7 +25,10 @@ public class PlayerCollision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       if (transform.position.y < fallThreshold)
+        {
+            uiManager.GameOver();
+        } 
     }
     
      void OnCollisionEnter (Collision collisionInfo)
@@ -35,6 +43,8 @@ public class PlayerCollision : MonoBehaviour
             spawnManager.GameOver();
             
             restartButton.SetActive(true);
+            
+            uiManager.GameOver();
          }
       }
 }
